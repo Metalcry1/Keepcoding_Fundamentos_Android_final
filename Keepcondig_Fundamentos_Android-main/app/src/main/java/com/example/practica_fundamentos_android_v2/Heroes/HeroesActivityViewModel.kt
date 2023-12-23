@@ -55,10 +55,11 @@ class HeroesActivityViewModel : ViewModel(){
                     }
 
                     State.SucessGetHeroes(heroArray)
-                } ?: State.Error("Empty Token")
+                } ?: State.Error("ERROR HEROES")
             else
                 State.Error(response.message)
         }
+
     }
 
     fun loadToken(): String{

@@ -3,6 +3,7 @@ package com.example.practica_fundamentos_android_v2.Login
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -39,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
               viewModel.uiState.collect{ state ->
                   when (state){
                       is LoginActivityViewModel.State.Idle -> idle()
-                      is LoginActivityViewModel.State.Error -> showError()
+                      is LoginActivityViewModel.State.Error -> showError(state.message)
                       is LoginActivityViewModel.State.Loading -> showLoading()
                       is LoginActivityViewModel.State.SucessLogin -> showSuccessLogin(state.token)
                   }
@@ -49,9 +50,6 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun showSuccessLogin(token: String) {
-        //Salvo en token en preferences
-        //saveTokenPreferences(token)
-        //prefRepository.saveToken(token)
         prefRepository.saveTokenPreferences(token)
 
         if (!token.isEmpty()) {
@@ -69,18 +67,13 @@ class LoginActivity : AppCompatActivity() {
         binding.layoutLoadingInclude.root.visibility = View.VISIBLE
     }
 
-    private fun showError() {
+    private fun showError(message: String) {
         Toast.makeText(binding.root.context, "Error Login", Toast.LENGTH_SHORT).show()
     }
 
     private fun idle() {
-
+        Log.w("HEROES ACTIVITY", "ESPERANDO INSTRUCCIONES")
     }
 
-    private fun saveTokenPreferences(token: String) =
-        getPreferences(Context.MODE_PRIVATE).edit().apply {
-            putString("Token", token)
-            apply()
-        }
 
 }

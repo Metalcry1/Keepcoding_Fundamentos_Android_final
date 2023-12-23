@@ -20,7 +20,6 @@ import com.example.practica_fundamentos_android_v2.Models.Hero
 
 interface HeroesActivitytInterface{
     fun showFragment(hero: Hero)
-
 }
 
 class HeroesActivity: AppCompatActivity(), HeroesActivitytInterface {
@@ -90,10 +89,12 @@ class HeroesActivity: AppCompatActivity(), HeroesActivitytInterface {
 
     private fun showError(message: String) {
 
+        Toast.makeText(binding.root.context, message, Toast.LENGTH_SHORT).show()
+        Log.w("HEROES ERROR", message)
     }
 
     private fun idle() {
-
+        Log.w("HEROES ACTIVITY", "ESPERANDO INSTRUCCIONES")
     }
 
     fun configurationRecyclerView(){
@@ -106,7 +107,6 @@ class HeroesActivity: AppCompatActivity(), HeroesActivitytInterface {
 
     fun resurrectAllHeros(){
         for (hero in heroList){
-            //saveHeroAlivePreferences(hero, true)
             prefRepository.saveHeroAlivePreferences(hero,true)
         }
         Toast.makeText(this, "Has resucitado a todos los Heroes", Toast.LENGTH_SHORT).show()
