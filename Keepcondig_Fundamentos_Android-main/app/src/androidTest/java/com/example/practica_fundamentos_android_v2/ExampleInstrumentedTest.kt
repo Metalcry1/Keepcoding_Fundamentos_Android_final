@@ -1,24 +1,38 @@
-package com.example.practica_fundamentos_android_v2
-
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.ext.junit.runners.AndroidJUnit4
-
+import com.example.practica_fundamentos_android_v2.Login.LoginActivityViewModel
+import com.example.practica_fundamentos_android_v2.Login.LoginActivityViewModel.State
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 
-import org.junit.Assert.*
+@ExperimentalCoroutinesApi
+class LoginActivityViewModelTest {
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-@RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+    private lateinit var viewModel: LoginActivityViewModel
+
+    @Before
+    fun setup() {
+        viewModel = LoginActivityViewModel()
+    }
+
     @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.practica_fundamentos_android_v2", appContext.packageName)
+    fun loginFunction() = runBlocking {
+        // Arrange
+        val email = "metalcry1@gmail.com"
+        val password = "4312"
+        val expectedToken =
+            "eyJ0eXAiOiJKV1QiLCJraWQiOiJwcml2YXRlIiwiYWxnIjoiSFMyNTYifQ.eyJleHBpcmF0aW9uIjo2NDA5MjIxMTIwMCwiaWRlbnRpZnkiOiJCRjFBMDE5Qy1CRkFGLTQzOEYtOTBGRC03OEQ2N0JEOTNEQjciLCJlbWFpbCI6Im1ldGFsY3J5MUBnbWFpbC5jb20ifQ.Hp0hmOav5nvYng9MyAxDgU0mGsZFlxuhptWqnOAolUs"
+
+        // Act
+        viewModel.lauchLogin(email, password)
+
+        // Assert
+        var actualState: State? = null
+        viewModel.uiState.collect {
+            actualState = it
+        }
+        assertEquals(State.SucessLogin(expectedToken), actualState)
     }
 }
