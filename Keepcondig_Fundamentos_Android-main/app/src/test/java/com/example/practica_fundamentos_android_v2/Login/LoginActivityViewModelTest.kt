@@ -1,6 +1,7 @@
 package com.example.practica_fundamentos_android_v2.Login
 
 import androidx.constraintlayout.utils.widget.MockView
+import com.example.practica_fundamentos_android_v2.UI.Login.LoginActivityViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK

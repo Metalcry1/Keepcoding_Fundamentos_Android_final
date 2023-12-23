@@ -4,9 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
-    android:background="@color/white"
-    android:orientation="vertical"
-    tools:context=".Heroes.HeroesActivity">
+    android:background="@color/translucentRed"
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/fFragment"
@@ -40,7 +39,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHeroes"
-        android:layout_width="300dp"
+        android:layout_width="350dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_margin="20dp" />

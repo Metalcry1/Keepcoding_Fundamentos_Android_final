@@ -1,5 +1,5 @@
-import com.example.practica_fundamentos_android_v2.Login.LoginActivityViewModel
-import com.example.practica_fundamentos_android_v2.Login.LoginActivityViewModel.State
+import com.example.practica_fundamentos_android_v2.UI.Login.LoginActivityViewModel
+import com.example.practica_fundamentos_android_v2.UI.Login.LoginActivityViewModel.State
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
