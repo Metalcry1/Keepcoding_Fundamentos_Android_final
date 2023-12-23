@@ -3,29 +3,22 @@ package com.example.practica_fundamentos_android_v2.Login
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.practica_fundamentos_android_v2.Heroes.HeroesActivity
-import com.example.practica_fundamentos_android_v2.Models.Hero
 import com.example.practica_fundamentos_android_v2.databinding.ActivityLoginBinding
+import com.example.practica_fundamentos_android_v2.Data.Local.PreferenceAplication.Companion.prefRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-interface LoginActivityInterface{
-
-    fun loadTokenPreferences()
-}
-
-class LoginActivity : AppCompatActivity(), LoginActivityInterface {
-
-
+class LoginActivity : AppCompatActivity() {
 
     private val viewModel : LoginActivityViewModel by viewModels()
     lateinit var binding: ActivityLoginBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -57,7 +50,9 @@ class LoginActivity : AppCompatActivity(), LoginActivityInterface {
 
     private fun showSuccessLogin(token: String) {
         //Salvo en token en preferences
-        saveTokenPreferences(token)
+        //saveTokenPreferences(token)
+        //prefRepository.saveToken(token)
+        prefRepository.saveTokenPreferences(token)
 
         if (!token.isEmpty()) {
             Toast.makeText(binding.root.context, token, Toast.LENGTH_SHORT).show()
@@ -88,7 +83,4 @@ class LoginActivity : AppCompatActivity(), LoginActivityInterface {
             apply()
         }
 
-    override fun loadTokenPreferences() {
-        getPreferences(Context.MODE_PRIVATE).getString("Token", null)
-    }
 }

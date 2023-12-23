@@ -1,13 +1,10 @@
 package com.example.practica_fundamentos_android_v2.Heroes
 
-import android.app.Application
-import android.content.Context
-import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.practica_fundamentos_android_v2.Models.Hero
 import com.example.practica_fundamentos_android_v2.Models.HeroDto
+import com.example.practica_fundamentos_android_v2.Data.Local.PreferenceAplication
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,10 +14,9 @@ import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
-class HeroesActivityViewModel(application: Application) : AndroidViewModel(application) {
+class HeroesActivityViewModel : ViewModel(){
 
-
-    val token = "eyJ0eXAiOiJKV1QiLCJraWQiOiJwcml2YXRlIiwiYWxnIjoiSFMyNTYifQ.eyJpZGVudGlmeSI6IkJGMUEwMTlDLUJGQUYtNDM4Ri05MEZELTc4RDY3QkQ5M0RCNyIsImVtYWlsIjoibWV0YWxjcnkxQGdtYWlsLmNvbSIsImV4cGlyYXRpb24iOjY0MDkyMjExMjAwfQ.nMioLT6CQI_lB8ehNB4MdGN4qaEuNaiIXXojo79mNbo"
+    var token = loadToken()
     val BASE_URL = "https://dragonball.keepcoding.education/api/"
 
     private val _uiState = MutableStateFlow<State>(State.Idle())
@@ -63,5 +59,10 @@ class HeroesActivityViewModel(application: Application) : AndroidViewModel(appli
             else
                 State.Error(response.message)
         }
+    }
+
+    fun loadToken(): String{
+        return PreferenceAplication.prefRepository.loadTokenPreferences()
+
     }
 }

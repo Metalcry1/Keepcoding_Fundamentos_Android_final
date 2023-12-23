@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.practica_fundamentos_android_v2.Data.Local.PreferenceAplication
+import com.example.practica_fundamentos_android_v2.Data.Local.PreferenceAplication.Companion.prefRepository
 import com.example.practica_fundamentos_android_v2.Heroes.HeroesActivitytInterface
 import com.example.practica_fundamentos_android_v2.Models.Hero
 import com.example.practica_fundamentos_android_v2.R
@@ -51,7 +53,7 @@ class HeroesAdapter(val heroesActivitytInterface: HeroesActivitytInterface) : Re
     override fun onBindViewHolder(holder: HeroesViewHolder, position: Int) {
         var hero = heroList[position]
         var heroName = hero.name
-        var isAliveHero =  heroesActivitytInterface.loadHero(hero)
+        var isAliveHero = prefRepository.loadHeroAlivePreferences(hero)
 
         if (isAliveHero) {
             Log.w("HEROE", "$heroName esta $isAliveHero vivo")

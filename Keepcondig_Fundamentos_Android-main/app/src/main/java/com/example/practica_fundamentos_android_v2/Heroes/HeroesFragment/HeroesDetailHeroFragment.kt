@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.example.practica_fundamentos_android_v2.Data.Local.PreferenceAplication
+import com.example.practica_fundamentos_android_v2.Data.Local.PreferenceAplication.Companion.prefRepository
 import com.example.practica_fundamentos_android_v2.Heroes.HeroesActivity
 import com.example.practica_fundamentos_android_v2.Heroes.HeroesActivitytInterface
 import com.example.practica_fundamentos_android_v2.Models.Hero
@@ -15,7 +17,7 @@ import com.example.practica_fundamentos_android_v2.R
 import com.example.practica_fundamentos_android_v2.databinding.FragmentHeroesDetailHeroBinding
 import kotlin.random.Random
 
-class HeroesDetailHeroFragment(private val hero: Hero, val heroesActivitytInterface: HeroesActivitytInterface) : Fragment() {
+class HeroesDetailHeroFragment(private val hero: Hero) : Fragment() {
 
     private lateinit var binding: FragmentHeroesDetailHeroBinding
     private val maxLife: Int = hero.maxLife
@@ -61,7 +63,6 @@ class HeroesDetailHeroFragment(private val hero: Hero, val heroesActivitytInterf
             binding.pbHealh.max = maxLife
             binding.pbHealh.progress = currentLife
             binding.tvCurrentLife.text = currentLife.toString()
-
         }
     }
 
@@ -78,7 +79,6 @@ class HeroesDetailHeroFragment(private val hero: Hero, val heroesActivitytInterf
                     ).show()
                     currentLife = currentLife - damage
                     binding.btHealth.isClickable = true
-
                 }
 
                 damage > currentLife -> {
@@ -90,7 +90,7 @@ class HeroesDetailHeroFragment(private val hero: Hero, val heroesActivitytInterf
                     ).show()
                     currentLife = 0
                     binding.btDamage.isClickable = false
-                    heroesActivitytInterface.saveHero(hero,false)
+                    prefRepository.saveHeroAlivePreferences(hero,false)
                     goToHeroes()
                 }
             }
@@ -139,10 +139,7 @@ class HeroesDetailHeroFragment(private val hero: Hero, val heroesActivitytInterf
                         currentLife += health
 
                     }
-
                 }
-
-
             }
 
         }
