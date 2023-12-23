@@ -1,4 +1,5 @@
 package com.example.practica_fundamentos_android_v2.Login
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,6 +16,8 @@ import okhttp3.Request
 class LoginActivityViewModel: ViewModel(){
 
     val BASE_URL = "https://dragonball.keepcoding.education/api/"
+
+
 
     private val _uiState = MutableStateFlow<State>(State.Idle())
     val uiState : StateFlow<State> = _uiState

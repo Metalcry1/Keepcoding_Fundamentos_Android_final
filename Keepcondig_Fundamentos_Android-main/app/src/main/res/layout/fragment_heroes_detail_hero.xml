@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".HeroesFragment.HeroesDetailHeroFragment">
+    tools:context=".Heroes.HeroesFragment.HeroesDetailHeroFragment">
 
     <include layout="@layout/layout_loading"
         android:id="@+id/layoutLoadingInclude"

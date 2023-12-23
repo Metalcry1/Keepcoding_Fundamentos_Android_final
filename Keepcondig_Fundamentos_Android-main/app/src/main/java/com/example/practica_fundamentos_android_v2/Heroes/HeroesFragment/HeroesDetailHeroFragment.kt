@@ -1,4 +1,4 @@
-package com.example.practica_fundamentos_android_v2.HeroesFragment
+package com.example.practica_fundamentos_android_v2.Heroes.HeroesFragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -16,10 +16,10 @@ import com.example.practica_fundamentos_android_v2.databinding.FragmentHeroesDet
 import kotlin.random.Random
 
 class HeroesDetailHeroFragment(private val hero: Hero, val heroesActivitytInterface: HeroesActivitytInterface) : Fragment() {
+
+    private lateinit var binding: FragmentHeroesDetailHeroBinding
     private val maxLife: Int = hero.maxLife
     var currentLife: Int = hero.currentLife
-    private lateinit var binding: FragmentHeroesDetailHeroBinding
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

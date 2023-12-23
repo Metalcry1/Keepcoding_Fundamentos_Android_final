@@ -3,18 +3,24 @@ package com.example.practica_fundamentos_android_v2.Login
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.practica_fundamentos_android_v2.Heroes.HeroesActivity
+import com.example.practica_fundamentos_android_v2.Models.Hero
 import com.example.practica_fundamentos_android_v2.databinding.ActivityLoginBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+interface LoginActivityInterface{
 
-class LoginActivity : AppCompatActivity() {
+    fun loadTokenPreferences()
+}
+
+class LoginActivity : AppCompatActivity(), LoginActivityInterface {
 
 
 
@@ -30,14 +36,9 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         val emailField = binding.etEmail
         val passWordField = binding.etPassword
-        val buttonLogin = binding.btLogin
-
-
 
         setObservers()
-        binding.btLogin.setOnClickListener { viewModel.lauchLogin(emailField.text.toString(),passWordField.text.toString())
-
-    }
+        binding.btLogin.setOnClickListener { viewModel.lauchLogin(emailField.text.toString(),passWordField.text.toString()) }
 
     }
         private fun setObservers(){
@@ -48,22 +49,16 @@ class LoginActivity : AppCompatActivity() {
                       is LoginActivityViewModel.State.Error -> showError()
                       is LoginActivityViewModel.State.Loading -> showLoading()
                       is LoginActivityViewModel.State.SucessLogin -> showSuccessLogin(state.token)
-
-                      else -> {}
                   }
               }
             }
-
         }
-    fun preferences(){
 
-    }
 
     private fun showSuccessLogin(token: String) {
-        val preferences = getPreferences(Context.MODE_PRIVATE)
-        val editablesPreferences = preferences.edit()
-        editablesPreferences.putString("Token", token)
-        editablesPreferences.apply()
+        //Salvo en token en preferences
+        saveTokenPreferences(token)
+
         if (!token.isEmpty()) {
             Toast.makeText(binding.root.context, token, Toast.LENGTH_SHORT).show()
             val intent = Intent(this, HeroesActivity::class.java)
@@ -87,4 +82,13 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    private fun saveTokenPreferences(token: String) =
+        getPreferences(Context.MODE_PRIVATE).edit().apply {
+            putString("Token", token)
+            apply()
+        }
+
+    override fun loadTokenPreferences() {
+        getPreferences(Context.MODE_PRIVATE).getString("Token", null)
+    }
 }

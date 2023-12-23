@@ -12,17 +12,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.practica_fundamentos_android_v2.Heroes.Adapter.HeroesAdapter
-import com.example.practica_fundamentos_android_v2.HeroesFragment.HeroesDetailHeroFragment
+import com.example.practica_fundamentos_android_v2.Heroes.HeroesAdapter.HeroesAdapter
+import com.example.practica_fundamentos_android_v2.Heroes.HeroesFragment.HeroesDetailHeroFragment
 import com.example.practica_fundamentos_android_v2.Models.Hero
 
 interface HeroesActivitytInterface{
     fun showFragment(hero: Hero)
     fun loadHero(hero: Hero): Boolean
     fun saveHero(hero: Hero, alive: Boolean)
-
-
 }
+
 class HeroesActivity: AppCompatActivity(), HeroesActivitytInterface {
 
     private val viewModel : HeroesActivityViewModel by viewModels()
@@ -39,8 +38,6 @@ class HeroesActivity: AppCompatActivity(), HeroesActivitytInterface {
         setObservers()
         configurationRecyclerView()
         listeners()
-
-
     }
 
     private fun setObservers() {
@@ -51,7 +48,6 @@ class HeroesActivity: AppCompatActivity(), HeroesActivitytInterface {
                     is HeroesActivityViewModel.State.Error -> showError(state.message)
                     is HeroesActivityViewModel.State.Loading -> showLoading()
                     is HeroesActivityViewModel.State.SucessGetHeroes -> showSuccessGetHeroes(state.heroList)
-                    else -> {}
                 }
             }
         }
@@ -64,7 +60,7 @@ class HeroesActivity: AppCompatActivity(), HeroesActivitytInterface {
     }
     override fun showFragment(hero: Hero) {
 
-        var alive = loadHeroAlivePreferencias(hero)
+        var alive = loadHeroAlivePreferences(hero)
         if (alive){
             Log.w("HEROE SHOW VIVO", alive.toString())
             binding.fFragment.visibility = View.VISIBLE
@@ -108,23 +104,25 @@ class HeroesActivity: AppCompatActivity(), HeroesActivitytInterface {
         heroesAdapter.updateListHeroes(heroList)
     }
 
-    fun loadHeroAlivePreferencias(hero: Hero) = getPreferences(Context.MODE_PRIVATE).getBoolean(hero.name, true)
+    fun loadHeroAlivePreferences(hero: Hero) = getPreferences(Context.MODE_PRIVATE).getBoolean(hero.name, true)
 
-    fun saveHeroAlivePreferencias(hero: Hero, alive: Boolean) =
+
+    fun saveHeroAlivePreferences(hero: Hero, alive: Boolean) =
         getPreferences(Context.MODE_PRIVATE).edit().apply {
             putBoolean(hero.name, alive)
             apply()
         }
 
-    override fun loadHero(hero: Hero): Boolean = loadHeroAlivePreferencias(hero)
+    override fun loadHero(hero: Hero): Boolean = loadHeroAlivePreferences(hero)
+
 
     override fun saveHero(hero: Hero, alive: Boolean){
-        saveHeroAlivePreferencias(hero, alive)
+        saveHeroAlivePreferences(hero, alive)
     }
 
     fun resurrectAllHeros(){
         for (hero in heroList){
-            saveHeroAlivePreferencias(hero, true)
+            saveHeroAlivePreferences(hero, true)
         }
         Toast.makeText(this, "Has resucitado a todos los Heroes", Toast.LENGTH_SHORT).show()
         heroesAdapter.updateListHeroes(heroList)

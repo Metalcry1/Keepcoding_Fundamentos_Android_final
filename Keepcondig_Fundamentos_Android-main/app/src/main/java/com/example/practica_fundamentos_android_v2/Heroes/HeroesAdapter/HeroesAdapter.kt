@@ -1,4 +1,4 @@
-package com.example.practica_fundamentos_android_v2.Heroes.Adapter
+package com.example.practica_fundamentos_android_v2.Heroes.HeroesAdapter
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -40,7 +40,6 @@ class HeroesAdapter(val heroesActivitytInterface: HeroesActivitytInterface) : Re
 
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeroesViewHolder {
         return HeroesViewHolder(
             CellHeroesBinding.inflate(LayoutInflater.from(parent.context), parent, false),
@@ -76,7 +75,5 @@ class HeroesAdapter(val heroesActivitytInterface: HeroesActivitytInterface) : Re
         this.heroList = heroList
         notifyDataSetChanged()
     }
-
-
 
 }

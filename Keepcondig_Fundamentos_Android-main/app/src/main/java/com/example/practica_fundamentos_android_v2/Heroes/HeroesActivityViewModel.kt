@@ -1,5 +1,9 @@
 package com.example.practica_fundamentos_android_v2.Heroes
 
+import android.app.Application
+import android.content.Context
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.practica_fundamentos_android_v2.Models.Hero
@@ -13,22 +17,20 @@ import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
-class HeroesActivityViewModel: ViewModel() {
+class HeroesActivityViewModel(application: Application) : AndroidViewModel(application) {
 
+
+    val token = "eyJ0eXAiOiJKV1QiLCJraWQiOiJwcml2YXRlIiwiYWxnIjoiSFMyNTYifQ.eyJpZGVudGlmeSI6IkJGMUEwMTlDLUJGQUYtNDM4Ri05MEZELTc4RDY3QkQ5M0RCNyIsImVtYWlsIjoibWV0YWxjcnkxQGdtYWlsLmNvbSIsImV4cGlyYXRpb24iOjY0MDkyMjExMjAwfQ.nMioLT6CQI_lB8ehNB4MdGN4qaEuNaiIXXojo79mNbo"
     val BASE_URL = "https://dragonball.keepcoding.education/api/"
 
     private val _uiState = MutableStateFlow<State>(State.Idle())
     val uiState : StateFlow<State> = _uiState
-    private var token = "eyJ0eXAiOiJKV1QiLCJraWQiOiJwcml2YXRlIiwiYWxnIjoiSFMyNTYifQ.eyJleHBpcmF0aW9uIjo2NDA5MjIxMTIwMCwiaWRlbnRpZnkiOiJCRjFBMDE5Qy1CRkFGLTQzOEYtOTBGRC03OEQ2N0JEOTNEQjciLCJlbWFpbCI6Im1ldGFsY3J5MUBnbWFpbC5jb20ifQ.Hp0hmOav5nvYng9MyAxDgU0mGsZFlxuhptWqnOAolUs"
-    private val maxLife = 100
-    private var  currentLife = 100
-
         sealed class State {
-        class Idle : State()
-        class Error(val message: String) : State()
-        class Loading : State()
-        class SucessGetHeroes(val heroList: List<Hero>) : State()
-    }
+            class Idle : State()
+            class Error(val message: String) : State()
+            class Loading : State()
+            class SucessGetHeroes(val heroList: List<Hero>) : State()
+        }
 
     fun lauchGetHeroes() {
         viewModelScope.launch(Dispatchers.IO) {
